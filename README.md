@@ -8,6 +8,7 @@ usuário e também, após o cadastro, realizar o login para ter acesso a plicaç
 # Orientações de utilização:
 
 - É necessário ter apenas acesso a internet.
+- Acessar o seguinte domínio - https://tarefadatabase.vercel.app/
 - Realizar seu cadastro.
 - Realizar o Login
 ## O Jogo:
@@ -23,14 +24,17 @@ usuário e também, após o cadastro, realizar o login para ter acesso a plicaç
 
 - HTML/CSS/JAVASCRIPT
 - Framework Vue.js
+- Deploy: Vercel
+- Serviço de banco de dados: Azure
 
 
 
 ###
 
 # Imagens do comportamento do banco de dados no SQL Server
-![Captura de tela 2024-06-02 115807](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/ebc5b0d5-455d-4e41-bb3d-e3ec0b2f3434)
+
 ![Captura de tela 2024-06-02 115912](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/320a8dd7-6d19-4b8e-8ab8-e7332272938b)
+![Captura de tela 2024-06-02 120320](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/8bb0b205-a576-4624-8f01-83b8c4fc3101)
 
 # Imagens do comportamento do banco de dados na Azure
 ![Captura de tela 2024-06-02 120231](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/055e20e4-96b4-4baf-af77-a1c76bef5cc0)
@@ -38,7 +42,7 @@ usuário e também, após o cadastro, realizar o login para ter acesso a plicaç
 
 
 # Vídeo demonstrativo do login
-![Captura de tela 2024-06-02 120320](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/8bb0b205-a576-4624-8f01-83b8c4fc3101)
+
 
 
 
