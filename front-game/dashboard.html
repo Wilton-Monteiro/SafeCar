@@ -23,15 +23,13 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
-        const { createApp } = Vue;
         const API_URL = 'https://tarefadatabase.vercel.app';
 
-        createApp({
-            data() {
-                return {
-                    heroi: { vida: 100 },
-                    vilao: { vida: 100 }            
-                };        
+        new Vue({
+            el: '#app',
+            data: {
+                heroi: { vida: 100 },
+                vilao: { vida: 100 }
             },
             mounted() {
                 this.fetchCharacterData();
@@ -72,19 +70,13 @@
                     if (isHeroi) {
                         this.vilao.vida -= 10;
                         this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
-                        this.acaoVilao();
                     } else {
                         this.heroi.vida -= 20;
                         this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
                     }
-                },
-                defender(isHeroi) {
-                    this.acaoVilao();
-                },
-                usarPocao(isHeroi) {
-                    if (isHeroi) {
-                        this.heroi.vida += 10;
-                        this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
-                        this.acaoVilao();
-                    } else {
-                       
+                }
+            }
+        });
+    </script>
+</body>
+</html>
