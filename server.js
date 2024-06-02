@@ -17,7 +17,11 @@ const config = {
     }
 };
 
-app.use(cors());
+// Configurar CORS para permitir requisições de 'https://tarefadatabase.vercel.app'
+app.use(cors({
+    origin: 'https://tarefadatabase.vercel.app'
+}));
+
 app.use(express.json());
 
 // Servir arquivos estáticos (como index.html)
