@@ -2,8 +2,13 @@
 
 # Sobre o projeto:
 ### 
-Essa tarefa mostra a integração entre uma aplicação web e um banco de dados, onde é possível realizar o cadastro de um novo
-usuário e também, após o cadastro, realizar o login para ter acesso a plicação o web que neste caso é um jogo entre Herói e Vilão.
+Este projeto demonstra a integração entre uma aplicação web e um banco de dados, focando na funcionalidade de cadastro e login de usuários, além de um jogo interativo entre Herói e Vilão. Através de uma interface desenvolvida com HTML, CSS e Vue.js, os usuários podem se cadastrar e fazer login, com as informações armazenadas em um banco de dados SQL Server gerenciado pelo backend em Node.js e Express. No jogo, ações como ataques e defesas atualizam o estado dos personagens em tempo real, comunicando-se com o servidor via Fetch API para garantir a sincronização precisa das informações. A aplicação usa CORS para permitir requisições seguras entre diferentes domínios, garantindo que os dados do jogo e dos usuários sejam mantidos atualizados e acessíveis. Este projeto exemplifica como integrar diferentes tecnologias para criar uma experiência de usuário interativa e segura.
+
+
+
+
+
+
 
 # Orientações de utilização:
 
