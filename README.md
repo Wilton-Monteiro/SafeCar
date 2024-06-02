@@ -47,6 +47,10 @@ https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/c0ab061b-5c80
 
 # Imagens do jogo
 
+![Captura de tela 2024-06-02 195223](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/96726711-aeac-4003-ad11-15833edeb14b)
+![Captura de tela 2024-06-02 195248](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/2f4fb346-3468-4a29-83de-285826a44c8e)
+![Captura de tela 2024-06-02 195421](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/8ccf3cb5-9a6a-4b63-8b70-35b4b0551fe3)
+
 
 
 
