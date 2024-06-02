@@ -12,7 +12,7 @@ Este projeto demonstra a integração entre uma aplicação web e um banco de da
 
 # Orientações de utilização:
 
-- É necessário ter apenas acesso a internet.
+- É necessário ter apenas acesso à internet.
 - Link para acessar a aplicação - https://tarefadatabase.vercel.app/
 - Realizar seu cadastro.
 - Realizar o Login
