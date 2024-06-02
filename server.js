@@ -18,7 +18,6 @@ const config = {
 };
 
 app.use(cors());
-
 app.use(express.json());
 
 // Servir arquivos estáticos (como index.html)
@@ -32,14 +31,14 @@ app.post('/atualizarVida', async (req, res) => {
         await sql.connect(config);
         const request = new sql.Request();
         await request.query(`
-      MERGE INTO personagem AS target
-      USING (VALUES ('heroi', ${vidaHeroi}), ('vilao', ${vidaVilao})) AS source (nome, vida)
-      ON target.nome = source.nome
-      WHEN MATCHED THEN
-        UPDATE SET vida = source.vida
-      WHEN NOT MATCHED THEN
-        INSERT (nome, vida) VALUES (source.nome, source.vida);
-      `);
+            MERGE INTO personagem AS target
+            USING (VALUES ('heroi', ${vidaHeroi}), ('vilao', ${vidaVilao})) AS source (nome, vida)
+            ON target.nome = source.nome
+            WHEN MATCHED THEN
+                UPDATE SET vida = source.vida
+            WHEN NOT MATCHED THEN
+                INSERT (nome, vida) VALUES (source.nome, source.vida);
+        `);
         res.status(200).send('Vida do herói e do vilão atualizada com sucesso.');
     } catch (err) {
         console.error(err);
@@ -68,6 +67,7 @@ app.get('/characters', async (req, res) => {
     }
 });
 
+// Rota para inserir um usuário
 app.post('/inserirUsuario', async (req, res) => {
     const { usuario, senha } = req.body;
 
@@ -75,14 +75,14 @@ app.post('/inserirUsuario', async (req, res) => {
         await sql.connect(config);
         const request = new sql.Request();
         await request.query(`
-      MERGE INTO usuario AS target
-      USING (VALUES ('${usuario}', '${senha}')) AS source (usuario, senha)
-      ON target.usuario = source.usuario
-      WHEN MATCHED THEN
-        UPDATE SET senha = source.senha
-      WHEN NOT MATCHED THEN
-        INSERT (usuario, senha) VALUES (source.usuario, source.senha);
-      `);
+            MERGE INTO usuario AS target
+            USING (VALUES ('${usuario}', '${senha}')) AS source (usuario, senha)
+            ON target.usuario = source.usuario
+            WHEN MATCHED THEN
+                UPDATE SET senha = source.senha
+            WHEN NOT MATCHED THEN
+                INSERT (usuario, senha) VALUES (source.usuario, source.senha);
+        `);
         res.status(200).send('Usuario cadastrado com sucesso.');
     } catch (err) {
         console.error(err);
@@ -90,27 +90,27 @@ app.post('/inserirUsuario', async (req, res) => {
     }
 });
 
-
+// Rota para validar um usuário
 app.get('/validarUsuario', async (req, res) => {
     try {
         const { usuario, senha } = req.query;
         await sql.connect(config);
         const request = new sql.Request();
 
-        // Consulta para obter os dados do herói
+        // Consulta para obter os dados do usuário
         const userResult = await request.query(`SELECT * FROM usuario WHERE usuario = '${usuario}' AND senha = '${senha}'`);
         const user = userResult.recordset[0];
-        if (user === undefined) {
-           return res.status(404).json({ error: 'Usuario não cadastrado' });
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario não cadastrado' });
         }
 
-        return res.json({ usuario, senha });
+        res.json({ usuario, senha });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar dados do usuario.' });
     }
 });
 
-// Rota para servir o arquivo HTML principal
+// Rotas para servir os arquivos HTML principais
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'front-game/login.html'));
 });
