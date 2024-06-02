@@ -8,7 +8,7 @@ usuário e também, após o cadastro, realizar o login para ter acesso a plicaç
 # Orientações de utilização:
 
 - É necessário ter apenas acesso a internet.
-- Acessar o seguinte domínio - https://tarefadatabase.vercel.app/
+- Link para acessar a aplicação - https://tarefadatabase.vercel.app/
 - Realizar seu cadastro.
 - Realizar o Login
 ## O Jogo:
