@@ -24,8 +24,8 @@
         new Vue({
             el: '#app',
             data: {
-                heroiVida: '',
-                vilaoVida: ''
+                heroiVida: 0,
+                vilaoVida: 0
             },
             mounted() {
                 this.fetchCharacterData();
@@ -34,6 +34,9 @@
                 async fetchCharacterData() {
                     try {
                         const response = await fetch('https://trabalho.vercel.app/characters'); // Substitua pela sua rota da API
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
                         const data = await response.json();
                         console.log(data)
                         this.heroiVida = data.heroi.vida;
