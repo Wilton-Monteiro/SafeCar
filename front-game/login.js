@@ -19,11 +19,8 @@ const app = Vue.createApp({
             this.exibirFormulario = !this.exibirFormulario;
         },
         cadastrar() {
-
             this.cadastrarUsuarioBD(this.novoUsuario.usuario, this.novoUsuario.senha);
             this.cadastroRealizado = true;
-            
-            
         },
         async cadastrarUsuarioBD(usuario, senha) {
             try {
@@ -53,7 +50,7 @@ const app = Vue.createApp({
                 if (!response.ok) {
                     this.exibirErro = true;
                 } else {
-                    window.open('game.html', '_blank');
+                    window.location.href = 'dashboard.html'; // Redirecionar para dashboard.html
                 }
                 console.log('Usuario validado com sucesso.');
             } catch (error) {
