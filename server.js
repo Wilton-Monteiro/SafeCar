@@ -18,7 +18,7 @@ const config = {
     }
 };
 
-// Configurar CORS para permitir requisições de 'https://pisafecar.vercel.app'
+// Configurar CORS para permitir requisições de 'https://tarefadatabase.vercel.app/'
 app.use(cors({
     origin: 'https://pisafecar.vercel.app'
 }));
