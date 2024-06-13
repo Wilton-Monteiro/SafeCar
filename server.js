@@ -6,7 +6,6 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração do banco de dados
 const config = {
     user: 'morerao',
     password: 'Gustavo1210',
@@ -14,21 +13,15 @@ const config = {
     database: 'heroivilao',
     options: {
         encrypt: true,
-       
+        enableArithAbort: true
     }
 };
 
-// Configurar CORS para permitir requisições de 'https://tarefadatabase.vercel.app/'
-app.use(cors({
-    origin: 'https://pisafecar.vercel.app'
-}));
+app.use(cors());
 
 app.use(express.json());
-
-// Servir arquivos estáticos (como index.html)
 app.use(express.static(path.join(__dirname, 'front-game')));
 
-// Rota para atualizar a vida do herói e do vilão
 app.post('/atualizarVida', async (req, res) => {
     const { vidaHeroi, vidaVilao } = req.body;
 
@@ -36,7 +29,6 @@ app.post('/atualizarVida', async (req, res) => {
         await sql.connect(config);
         const request = new sql.Request();
 
-        // Atualizar a vida do herói
         await request.query(`
             MERGE INTO personagem AS target
             USING (VALUES ('heroi', @vidaHeroi)) AS source (nome, vida)
@@ -49,7 +41,6 @@ app.post('/atualizarVida', async (req, res) => {
             vidaHeroi
         });
 
-        // Atualizar a vida do vilão
         await request.query(`
             MERGE INTO personagem AS target
             USING (VALUES ('vilao', @vidaVilao)) AS source (nome, vida)
@@ -64,22 +55,19 @@ app.post('/atualizarVida', async (req, res) => {
 
         res.status(200).send('Vida do herói e do vilão atualizada com sucesso.');
     } catch (err) {
-        console.error(err);
+        console.error('Erro ao atualizar a vida do herói e do vilão:', err);
         res.status(500).send('Erro ao atualizar a vida do herói e do vilão.');
     }
 });
 
-// Rota para fornecer os dados do herói e do vilão
 app.get('/characters', async (req, res) => {
     try {
         await sql.connect(config);
         const request = new sql.Request();
 
-        // Consulta para obter os dados do herói
         const heroResult = await request.query("SELECT * FROM personagem WHERE nome = 'heroi'");
         const heroi = heroResult.recordset[0];
 
-        // Consulta para obter os dados do vilão
         const villainResult = await request.query("SELECT * FROM personagem WHERE nome = 'vilao'");
         const vilao = villainResult.recordset[0];
 
@@ -90,13 +78,13 @@ app.get('/characters', async (req, res) => {
     }
 });
 
-// Rota para inserir um usuário
 app.post('/inserirUsuario', async (req, res) => {
     const { usuario, senha } = req.body;
 
     try {
         await sql.connect(config);
         const request = new sql.Request();
+
         await request.query(`
             MERGE INTO usuario AS target
             USING (VALUES (@usuario, @senha)) AS source (usuario, senha)
@@ -109,14 +97,14 @@ app.post('/inserirUsuario', async (req, res) => {
             usuario,
             senha
         });
+
         res.status(200).send('Usuário cadastrado com sucesso.');
     } catch (err) {
-        console.error(err);
+        console.error('Erro ao inserir usuário:', err);
         res.status(500).send('Erro ao inserir usuário.');
     }
 });
 
-// Rota para validar um usuário
 app.get('/validarUsuario', async (req, res) => {
     const { usuario, senha } = req.query;
 
@@ -124,7 +112,6 @@ app.get('/validarUsuario', async (req, res) => {
         await sql.connect(config);
         const request = new sql.Request();
 
-        // Consulta para validar o usuário
         const result = await request.query(`
             SELECT * FROM usuario WHERE usuario = @usuario AND senha = @senha
         `, {
@@ -139,12 +126,11 @@ app.get('/validarUsuario', async (req, res) => {
 
         res.status(200).json({ message: 'Login bem sucedido.' });
     } catch (err) {
-        console.error(err);
+        console.error('Erro ao validar usuário:', err);
         res.status(500).json({ error: 'Erro ao validar usuário.' });
     }
 });
 
-// Rotas para servir os arquivos HTML principais
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'front-game/login.html'));
 });
@@ -157,7 +143,6 @@ app.get('/game', (req, res) => {
     res.sendFile(path.join(__dirname, 'front-game/game.html'));
 });
 
-// Iniciar o servidor
 app.listen(PORT, () => {
     console.log(`Servidor Express rodando na porta ${PORT}`);
 });
