@@ -21,6 +21,28 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'front-game')));
 
+app.post('/inserirManutencao', async (req, res) => {
+    const { veiculo, peca, quilometragemAtual, quilometragemTroca } = req.body;
+
+    try {
+        await sql.connect(config);
+        const request = new sql.Request();
+        request.input('veiculo', sql.NVarChar, veiculo);
+        request.input('peca', sql.NVarChar, peca);
+        request.input('quilometragemAtual', sql.Int, quilometragemAtual);
+        request.input('quilometragemTroca', sql.Int, quilometragemTroca);
+        
+        await request.query(`
+            INSERT INTO personagem (veiculo, peca, quilometragem_atual, quilometragem_troca)
+            VALUES (@veiculo, @peca, @quilometragemAtual, @quilometragemTroca);
+        `);
+        res.status(200).send('Informações de manutenção inseridas com sucesso.');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao inserir informações de manutenção.');
+    }
+});
+
 app.post('/atualizarVida', async (req, res) => {
     const { vidaHeroi, vidaVilao } = req.body;
     try {
