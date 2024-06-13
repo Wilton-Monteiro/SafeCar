@@ -27,6 +27,7 @@
             </div>
             <button type="submit">Enviar</button>
         </form>
+        <button @click="gerarRelatorio">Ver Relatório de Peças</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
@@ -64,6 +65,20 @@
                     } catch (error) {
                         console.error('Erro ao enviar dados de manutenção:', error);
                         alert('Erro ao enviar dados de manutenção.');
+                    }
+                },
+                async gerarRelatorio() {
+                    try {
+                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
+                        if (!response.ok) {
+                            throw new Error('Erro ao obter relatório de peças.');
+                        }
+                        const relatorio = await response.json();
+                        sessionStorage.setItem('relatorioPecas', JSON.stringify(relatorio));
+                        window.location.href = '/game';
+                    } catch (error) {
+                        console.error('Erro ao gerar relatório de peças:', error);
+                        alert('Erro ao gerar relatório de peças.');
                     }
                 }
             }
