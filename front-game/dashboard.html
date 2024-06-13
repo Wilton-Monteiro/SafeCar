@@ -26,7 +26,6 @@
                 <input type="number" id="quilometragemTroca" v-model="manutencao.quilometragemTroca" required>
             </div>
             <button type="submit">Enviar</button>
-            <button type="button" @click="gerarRelatorio">Gerar Relatório</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
@@ -66,7 +65,9 @@
                         console.error('Erro ao enviar dados de manutenção:', error);
                         alert('Erro ao enviar dados de manutenção.');
                     }
-                },
-                async gerarRelatorio() {
-                    try {
-                        const response = await fetch(`${API_URL}/relatorio
+                }
+            }
+        });
+    </script>
+</body>
+</html>
