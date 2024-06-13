@@ -116,6 +116,21 @@ app.get('/validarUsuario', async (req, res) => {
     }
 });
 
+app.get('/relatorioPersonagem', async (req, res) => {
+    try {
+        await sql.connect(config);
+        const request = new sql.Request();
+        const result = await request.query(`
+            SELECT veiculo, peca, quilometragem_atual, quilometragem_troca 
+            FROM personagem
+        `);
+        res.json(result.recordset);
+    } catch (err) {
+        console.error('Erro ao buscar relatório:', err);
+        res.status(500).send('Erro ao buscar relatório.');
+    }
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'front-game/login.html'));
 });
