@@ -1,4 +1,4 @@
-# Safecar PI DSM 2
+# SafeCar PI DSM 2
 
 # Membros do projeto:
 - Wilton Monteiro Resende
@@ -10,6 +10,10 @@
 Nossa aplicação web de gerenciamento de peças veiculares oferece uma solução completa para controlar a manutenção e substituição de componentes automotivos. Com uma interface intuitiva, permite registrar e monitorar a quilometragem atual e a prevista para troca de cada peça, assegurando que todos os veículos estejam sempre em condições ideais de funcionamento
 
 # Video Youtube
+
+
+# Link do site
+https://tarefadatabase-wilton-monteiros-projects.vercel.app/
 
 # Orientações de utilização:
 
@@ -32,7 +36,6 @@ Nossa aplicação web de gerenciamento de peças veiculares oferece uma soluçã
 ###
 
 # Página de Login - Funcionalidade 1
-
 ![Captura de tela 2024-06-13 044850](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/9849db35-9a5d-4b2a-898e-c225dac85f94)
 
 
@@ -41,7 +44,6 @@ Nossa aplicação web de gerenciamento de peças veiculares oferece uma soluçã
 
 
 # Relatório de manutenção - Funcionalidade 3
-
 ![Captura de tela 2024-06-13 045035](https://github.com/Wilton-Monteiro/tarefadatabase/assets/145207587/78a72002-c683-4521-8928-396cf8038256)
 
 
