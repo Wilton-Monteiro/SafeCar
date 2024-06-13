@@ -26,14 +26,8 @@
                 <input type="number" id="quilometragemTroca" v-model="manutencao.quilometragemTroca" required>
             </div>
             <button type="submit">Enviar</button>
-            <button type="button" @click="mostrarRelatorio">Mostrar Relatório</button>
         </form>
-        <div v-if="relatorio.length">
-            <h2>Relatório da Tabela Personagem</h2>
-            <ul>
-                <li v-for="item in relatorio" :key="item.id">{{ item.veiculo }} - {{ item.peca }} - {{ item.quilometragem_atual }} - {{ item.quilometragem_troca }}</li>
-            </ul>
-        </div>
+        <button @click="irParaRelatorio">Ver Relatório</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
@@ -47,8 +41,7 @@
                     peca: '',
                     quilometragemAtual: 0,
                     quilometragemTroca: 0
-                },
-                relatorio: []
+                }
             },
             methods: {
                 async enviarManutencao() {
@@ -64,7 +57,7 @@
                             throw new Error('Erro ao enviar dados de manutenção.');
                         }
                         alert('Informações de manutenção inseridas com sucesso.');
-                        // Limpar o formulário após o envio
+                        // Limpar o formulário após o
                         this.manutencao.veiculo = '';
                         this.manutencao.peca = '';
                         this.manutencao.quilometragemAtual = 0;
@@ -74,17 +67,8 @@
                         alert('Erro ao enviar dados de manutenção.');
                     }
                 },
-                async mostrarRelatorio() {
-                    try {
-                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
-                        if (!response.ok) {
-                            throw new Error('Erro ao buscar relatório.');
-                        }
-                        this.relatorio = await response.json();
-                    } catch (error) {
-                        console.error('Erro ao buscar relatório:', error);
-                        alert('Erro ao buscar relatório.');
-                    }
+                irParaRelatorio() {
+                    window.location.href = 'game.html';
                 }
             }
         });
