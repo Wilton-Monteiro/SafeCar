@@ -2,36 +2,30 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Jogo Herói e Vilão</title>
+    <title>Manutenção preventiva</title>
     <link rel="stylesheet" href="dashboard-style.css">
 </head>
 <body>
     <div id="app" class="container">
         <h1>Dashboard</h1>
-        <div class="personagens">
-            <div class="personagem">
-                <h2>Herói</h2>
-                <div>Vida: {{ heroi.vida }}%</div>
+        <form @submit.prevent="enviarManutencao">
+            <div>
+                <label for="veiculo">Veículo:</label>
+                <input type="text" id="veiculo" v-model="manutencao.veiculo" required>
             </div>
-            <div class="personagem">
-                <h2>Vilão</h2>
-                <div>Vida: {{ vilao.vida }}%</div>
+            <div>
+                <label for="peca">Peça:</label>
+                <input type="text" id="peca" v-model="manutencao.peca" required>
             </div>
-        </div>
-        <button @click="atacar(true)">Herói Atacar</button>
-        <button @click="atacar(false)">Vilão Atacar</button>
-        
-        <h2>Inserir Manutenção</h2>
-        <form @submit.prevent="inserirManutencao">
-            <label for="veiculo">Veículo:</label>
-            <input type="text" id="veiculo" v-model="veiculo" required>
-            <label for="peca">Peça:</label>
-            <input type="text" id="peca" v-model="peca" required>
-            <label for="quilometragemAtual">Quilometragem Atual:</label>
-            <input type="number" id="quilometragemAtual" v-model="quilometragemAtual" required>
-            <label for="quilometragemTroca">Quilometragem de Troca:</label>
-            <input type="number" id="quilometragemTroca" v-model="quilometragemTroca" required>
-            <button type="submit">Inserir</button>
+            <div>
+                <label for="quilometragemAtual">Quilometragem Atual:</label>
+                <input type="number" id="quilometragemAtual" v-model="manutencao.quilometragemAtual" required>
+            </div>
+            <div>
+                <label for="quilometragemTroca">Quilometragem de Troca:</label>
+                <input type="number" id="quilometragemTroca" v-model="manutencao.quilometragemTroca" required>
+            </div>
+            <button type="submit">Enviar</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
@@ -41,81 +35,35 @@
         new Vue({
             el: '#app',
             data: {
-                heroi: { vida: 100 },
-                vilao: { vida: 100 },
-                veiculo: '',
-                peca: '',
-                quilometragemAtual: '',
-                quilometragemTroca: ''
-            },
-            mounted() {
-                this.fetchCharacterData();
+                manutencao: {
+                    veiculo: '',
+                    peca: '',
+                    quilometragemAtual: 0,
+                    quilometragemTroca: 0
+                }
             },
             methods: {
-                async fetchCharacterData() {
-                    try {
-                        const response = await fetch(`${API_URL}/characters`);
-                        if (!response.ok) {
-                            throw new Error('Erro ao buscar dados dos personagens.');
-                        }
-                        const data = await response.json();
-                        this.heroi.vida = data.heroi.vida;
-                        this.vilao.vida = data.vilao.vida;
-                    } catch (error) {
-                        console.error('Erro ao buscar dados dos personagens:', error);
-                    }
-                },
-                async atualizarVidaNoBancoDeDados(vidaHeroi, vidaVilao) {
-                    try {
-                        const response = await fetch(`${API_URL}/atualizarVida`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ vidaHeroi, vidaVilao })
-                        });
-                        if (!response.ok) {
-                            throw new Error('Erro ao atualizar a vida no banco de dados.');
-                        }
-                        console.log('Vida do herói e do vilão atualizada com sucesso.');
-                        this.fetchCharacterData(); // Atualizar os dados no frontend após a atualização no banco de dados
-                    } catch (error) {
-                        console.error('Erro ao atualizar a vida no banco de dados:', error);
-                    }
-                },
-                atacar(isHeroi) {
-                    if (isHeroi) {
-                        this.vilao.vida -= 10;
-                        this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
-                    } else {
-                        this.heroi.vida -= 20;
-                        this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
-                    }
-                },
-                async inserirManutencao() {
+                async enviarManutencao() {
                     try {
                         const response = await fetch(`${API_URL}/inserirManutencao`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({
-                                veiculo: this.veiculo,
-                                peca: this.peca,
-                                quilometragemAtual: this.quilometragemAtual,
-                                quilometragemTroca: this.quilometragemTroca
-                            })
+                            body: JSON.stringify(this.manutencao)
                         });
                         if (!response.ok) {
-                            throw new Error('Erro ao inserir manutenção.');
+                            throw new Error('Erro ao enviar dados de manutenção.');
                         }
-                        console.log('Manutenção inserida com sucesso.');
-                        this.veiculo = '';
-                        this.peca = '';
-                        this.quilometragemAtual = '';
-                        this.quilometragemTroca = '';
+                        alert('Informações de manutenção inseridas com sucesso.');
+                        // Limpar o formulário após o envio
+                        this.manutencao.veiculo = '';
+                        this.manutencao.peca = '';
+                        this.manutencao.quilometragemAtual = 0;
+                        this.manutencao.quilometragemTroca = 0;
                     } catch (error) {
-                        console.error('Erro ao inserir manutenção:', error);
+                        console.error('Erro ao enviar dados de manutenção:', error);
+                        alert('Erro ao enviar dados de manutenção.');
                     }
                 }
             }
