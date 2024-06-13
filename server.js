@@ -21,7 +21,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'front-game')));
 
-// Endpoint para inserir dados de manutenção
 app.post('/inserirManutencao', async (req, res) => {
     const { veiculo, peca, quilometragemAtual, quilometragemTroca } = req.body;
 
@@ -44,7 +43,6 @@ app.post('/inserirManutencao', async (req, res) => {
     }
 });
 
-// Endpoint para atualizar a vida do herói e vilão
 app.post('/atualizarVida', async (req, res) => {
     const { vidaHeroi, vidaVilao } = req.body;
     try {
@@ -66,7 +64,6 @@ app.post('/atualizarVida', async (req, res) => {
     }
 });
 
-// Endpoint para buscar dados do herói e vilão
 app.get('/characters', async (req, res) => {
     try {
         await sql.connect(config);
@@ -82,7 +79,6 @@ app.get('/characters', async (req, res) => {
     }
 });
 
-// Endpoint para inserir ou atualizar usuário
 app.post('/inserirUsuario', async (req, res) => {
     const { usuario, senha } = req.body;
     try {
@@ -104,7 +100,6 @@ app.post('/inserirUsuario', async (req, res) => {
     }
 });
 
-// Endpoint para validar usuário
 app.get('/validarUsuario', async (req, res) => {
     try {
         const { usuario, senha } = req.query;
@@ -118,19 +113,6 @@ app.get('/validarUsuario', async (req, res) => {
         return res.json({ usuario, senha });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar dados do usuario.' });
-    }
-});
-
-// Endpoint para gerar relatório da tabela personagem
-app.get('/relatorioPersonagem', async (req, res) => {
-    try {
-        await sql.connect(config);
-        const request = new sql.Request();
-        const result = await request.query("SELECT * FROM personagem");
-        res.json(result.recordset);
-    } catch (error) {
-        console.error('Erro ao buscar dados da tabela personagem:', error);
-        res.status(500).json({ error: 'Erro ao buscar dados da tabela personagem.' });
     }
 });
 
