@@ -1,35 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <title>Prova - Jogo Herói e Vilão</title>
-    <link rel="stylesheet" href="game.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Relatório de Manutenção</title>
+    <link rel="stylesheet" href="game-style.css">
 </head>
-
 <body>
-    <div id="app">
-        <div class="personagem">
-            <div class="barra-vida" :style="{width: heroi.vida + '%'}">{{ heroi.vida }}%</div>
-            <div class="sprite">Figura do personagem</div>
-            <h1>Herói</h1>
-            <div class="acoes">
-                <button @click="atacar(true)">Atacar</button>
-                <button @click="defender(true)">Defender</button>
-                <button @click="pocao(true)">Usar Poção</button>
-                <button @click="correr(true)">Correr</button>
-            </div>
-        </div>
-
-        <div class="personagem">
-            <div class="barra-vida" :style="{width: vilao.vida + '%'}">{{ vilao.vida }}%</div>
-            <div class="sprite">Figura do personagem</div>
-            <h1>Vilão</h1>
-            <button onclick="window.open('dashboard.html','_blank')">Dashboard</button>
-        </div>        
+    <div id="app" class="container">
+        <h1>Relatório de Manutenção</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Veículo</th>
+                    <th>Peça</th>
+                    <th>Quilometragem Atual</th>
+                    <th>Quilometragem de Troca</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in relatorio" :key="item.veiculo">
+                    <td>{{ item.veiculo }}</td>
+                    <td>{{ item.peca }}</td>
+                    <td>{{ item.quilometragem_atual }}</td>
+                    <td>{{ item.quilometragem_troca }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        const API_URL = 'https://tarefadatabase.vercel.app';
 
+        new Vue({
+            el: '#app',
+            data: {
+                relatorio: []
+            },
+            created() {
+                this.carregarRelatorio();
+            },
+            methods: {
+                async carregarRelatorio() {
+                    try {
+                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
+                        if (!response.ok) {
+                            throw new Error('Erro ao carregar relatório.');
+                        }
+                        this.relatorio = await response.json();
+                    } catch (error) {
+                        console.error('Erro ao carregar relatório:', error);
+                        alert('Erro ao carregar relatório.');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
 </html>
-<script type="module" src="game.js"></script>
