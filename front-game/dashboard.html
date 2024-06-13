@@ -27,11 +27,10 @@
             </div>
             <button type="submit">Enviar</button>
         </form>
-        <button @click="gerarRelatorio">Gerar Relatório</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
-        const API_URL = 'http://localhost:3000';
+        const API_URL = 'https://tarefadatabase.vercel.app';
 
         new Vue({
             el: '#app',
@@ -57,32 +56,15 @@
                             throw new Error('Erro ao enviar dados de manutenção.');
                         }
                         alert('Informações de manutenção inseridas com sucesso.');
-                        this.limparFormulario();
+                        // Limpar o formulário após o envio
+                        this.manutencao.veiculo = '';
+                        this.manutencao.peca = '';
+                        this.manutencao.quilometragemAtual = 0;
+                        this.manutencao.quilometragemTroca = 0;
                     } catch (error) {
                         console.error('Erro ao enviar dados de manutenção:', error);
                         alert('Erro ao enviar dados de manutenção.');
                     }
-                },
-                async gerarRelatorio() {
-                    try {
-                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
-                        if (!response.ok) {
-                            throw new Error('Erro ao gerar relatório.');
-                        }
-                        const data = await response.json();
-                        console.log(data); // Para teste, você pode exibir os dados no console
-                        localStorage.setItem('relatorioPersonagem', JSON.stringify(data));
-                        window.location.href = '/game';
-                    } catch (error) {
-                        console.error('Erro ao gerar relatório:', error);
-                        alert('Erro ao gerar relatório.');
-                    }
-                },
-                limparFormulario() {
-                    this.manutencao.veiculo = '';
-                    this.manutencao.peca = '';
-                    this.manutencao.quilometragemAtual = 0;
-                    this.manutencao.quilometragemTroca = 0;
                 }
             }
         });
