@@ -55,7 +55,9 @@ const app = Vue.createApp({
                 if (!response.ok) {
                     this.exibirErro = true;
                 } else {
-                    window.open('game.html', '_self'); // Abre o jogo na mesma janela
+                    this.exibirErro = false;
+                    this.exibirFormulario = false; // Esconde o formulário de cadastro após autenticar
+                    window.location.href = 'game.html'; // Redireciona para a página do jogo
                 }
                 console.log('Usuário validado com sucesso.');
             } catch (error) {
