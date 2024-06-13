@@ -1,45 +1,72 @@
+/* dashboard-style.css */
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url(background2.jpeg);
-}    
-
-
+    background-color: #f4f4f9;
+    color: #333;
+}
 
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 50px auto;
     padding: 20px;
-    background-image: linear-gradient(black, brown, green);
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
+    color: #4CAF50;
 }
 
-.personagens {
+form {
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
+    flex-direction: column;
 }
 
-.personagem {
-    flex: 1;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+form div {
+    margin-bottom: 15px;
 }
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-#heroiVida,
-#vilaoVida {
-    font-size: 18px;
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+}
+
+button:last-child {
+    background-color: #2196F3;
+}
+
+button:last-child:hover {
+    background-color: #1E88E5;
 }
