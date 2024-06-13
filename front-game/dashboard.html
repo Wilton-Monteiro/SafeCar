@@ -26,6 +26,8 @@
                 <input type="number" id="quilometragemTroca" v-model="manutencao.quilometragemTroca" required>
             </div>
             <button type="submit">Enviar</button>
+            <button type="button" @click="gerarRelatorio">Gerar Relatório</button>
+            <button @click="irParaGame">Ir para o Jogo</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
@@ -65,6 +67,24 @@
                         console.error('Erro ao enviar dados de manutenção:', error);
                         alert('Erro ao enviar dados de manutenção.');
                     }
+                },
+                async gerarRelatorio() {
+                    try {
+                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
+                        if (!response.ok) {
+                            throw new Error('Erro ao gerar relatório.');
+                        }
+                        const data = await response.json();
+                        console.log('Relatório da Tabela Personagem:', data);
+                        // Exibir o relatório (aqui você pode definir a lógica para exibir os dados na tela)
+                        alert('Relatório gerado com sucesso. Veja no console para detalhes.');
+                    } catch (error) {
+                        console.error('Erro ao gerar relatório:', error);
+                        alert('Erro ao gerar relatório.');
+                    }
+                },
+                irParaGame() {
+                    window.location.href = '/game';
                 }
             }
         });
