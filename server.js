@@ -14,7 +14,7 @@ const config = {
     database: 'heroivilao',
     options: {
         encrypt: true,
-        enableArithAbort: true
+       
     }
 };
 
