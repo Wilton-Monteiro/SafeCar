@@ -1,4 +1,4 @@
-const API_URL = 'https://tarefadatabase.vercel.app/';
+const API_URL = 'https://tarefadatabase.vercel.app';
 
 const app = Vue.createApp({
     data() {
@@ -18,13 +18,12 @@ const app = Vue.createApp({
         formulario() {
             this.exibirFormulario = !this.exibirFormulario;
         },
-        async cadastrar() {
-            try {
-                await this.cadastrarUsuarioBD(this.novoUsuario.usuario, this.novoUsuario.senha);
-                this.cadastroRealizado = true;
-            } catch (error) {
-                console.error('Erro ao cadastrar usuário:', error);
-            }
+        cadastrar() {
+
+            this.cadastrarUsuarioBD(this.novoUsuario.usuario, this.novoUsuario.senha);
+            this.cadastroRealizado = true;
+            
+            
         },
         async cadastrarUsuarioBD(usuario, senha) {
             try {
@@ -36,12 +35,11 @@ const app = Vue.createApp({
                     body: JSON.stringify({ usuario, senha })
                 });
                 if (!response.ok) {
-                    throw new Error('Erro ao inserir usuário no banco de dados.');
+                    throw new Error('Erro ao inserir usuario no banco de dados.');
                 }
-                console.log('Usuário inserido com sucesso.');
+                console.log('Usuario inserido com sucesso.');
             } catch (error) {
-                console.error('Erro ao inserir usuário no banco de dados:', error);
-                throw error; // Propaga o erro para ser tratado onde a função foi chamada
+                console.error('Erro ao atualizar a vida no banco de dados:', error);
             }
         },
         async autenticar() {
@@ -55,13 +53,11 @@ const app = Vue.createApp({
                 if (!response.ok) {
                     this.exibirErro = true;
                 } else {
-                    this.exibirErro = false;
-                    this.exibirFormulario = false; // Esconde o formulário de cadastro após autenticar
-                    window.location.href = 'game.html'; // Redireciona para a página do jogo
+                    window.open('game.html', '_blank');
                 }
-                console.log('Usuário validado com sucesso.');
+                console.log('Usuario validado com sucesso.');
             } catch (error) {
-                console.error('Erro ao validar usuário:', error);
+                console.error('Erro ao validar o usuario:', error);
             }
         }
     }
