@@ -20,6 +20,19 @@
         </div>
         <button @click="atacar(true)">Herói Atacar</button>
         <button @click="atacar(false)">Vilão Atacar</button>
+        
+        <h2>Inserir Manutenção</h2>
+        <form @submit.prevent="inserirManutencao">
+            <label for="veiculo">Veículo:</label>
+            <input type="text" id="veiculo" v-model="veiculo" required>
+            <label for="peca">Peça:</label>
+            <input type="text" id="peca" v-model="peca" required>
+            <label for="quilometragemAtual">Quilometragem Atual:</label>
+            <input type="number" id="quilometragemAtual" v-model="quilometragemAtual" required>
+            <label for="quilometragemTroca">Quilometragem de Troca:</label>
+            <input type="number" id="quilometragemTroca" v-model="quilometragemTroca" required>
+            <button type="submit">Inserir</button>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
@@ -29,7 +42,11 @@
             el: '#app',
             data: {
                 heroi: { vida: 100 },
-                vilao: { vida: 100 }
+                vilao: { vida: 100 },
+                veiculo: '',
+                peca: '',
+                quilometragemAtual: '',
+                quilometragemTroca: ''
             },
             mounted() {
                 this.fetchCharacterData();
@@ -73,6 +90,32 @@
                     } else {
                         this.heroi.vida -= 20;
                         this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
+                    }
+                },
+                async inserirManutencao() {
+                    try {
+                        const response = await fetch(`${API_URL}/inserirManutencao`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                veiculo: this.veiculo,
+                                peca: this.peca,
+                                quilometragemAtual: this.quilometragemAtual,
+                                quilometragemTroca: this.quilometragemTroca
+                            })
+                        });
+                        if (!response.ok) {
+                            throw new Error('Erro ao inserir manutenção.');
+                        }
+                        console.log('Manutenção inserida com sucesso.');
+                        this.veiculo = '';
+                        this.peca = '';
+                        this.quilometragemAtual = '';
+                        this.quilometragemTroca = '';
+                    } catch (error) {
+                        console.error('Erro ao inserir manutenção:', error);
                     }
                 }
             }
