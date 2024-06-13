@@ -116,6 +116,18 @@ app.get('/validarUsuario', async (req, res) => {
     }
 });
 
+app.get('/relatorioPersonagem', async (req, res) => {
+    try {
+        await sql.connect(config);
+        const request = new sql.Request();
+        const result = await request.query("SELECT * FROM personagem");
+        res.json(result.recordset);
+    } catch (error) {
+        console.error('Erro ao buscar dados da tabela personagem:', error);
+        res.status(500).json({ error: 'Erro ao buscar dados da tabela personagem.' });
+    }
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'front-game/login.html'));
 });
