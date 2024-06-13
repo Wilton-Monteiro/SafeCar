@@ -26,11 +26,12 @@
                 <input type="number" id="quilometragemTroca" v-model="manutencao.quilometragemTroca" required>
             </div>
             <button type="submit">Enviar</button>
+            <button @click.prevent="gerarRelatorio">Gerar Relatório</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
-        const API_URL = 'https://tarefadatabase.vercel.app';
+        const API_URL = 'http://localhost:3000'; // Adjust this to your server URL
 
         new Vue({
             el: '#app',
@@ -65,10 +66,75 @@
                         console.error('Erro ao enviar dados de manutenção:', error);
                         alert('Erro ao enviar dados de manutenção.');
                     }
+                },
+                async gerarRelatorio() {
+                    try {
+                        const response = await fetch(`${API_URL}/relatorioPersonagem`);
+                        if (!response.ok) {
+                            throw new Error('Erro ao buscar relatório de peças.');
+                        }
+                        const relatorio = await response.json();
+                        console.log('Relatório de peças:', relatorio);
+
+                        // Exibir relatório na tela do jogo
+                        const gameWindow = window.open(`${API_URL}/game`, '_blank');
+                        gameWindow.document.write(`
+                            <html lang="pt-br">
+                            <head>
+                                <meta charset="UTF-8">
+                                <title>Relatório de Peças</title>
+                                <style>
+                                    body {
+                                        font-family: Arial, sans-serif;
+                                        padding: 20px;
+                                    }
+                                    table {
+                                        width: 100%;
+                                        border-collapse: collapse;
+                                        margin-top: 20px;
+                                    }
+                                    th, td {
+                                        border: 1px solid #ddd;
+                                        padding: 8px;
+                                        text-align: left;
+                                    }
+                                    th {
+                                        background-color: #f2f2f2;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <h2>Relatório de Peças</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Veículo</th>
+                                            <th>Peça</th>
+                                            <th>Quilometragem Atual</th>
+                                            <th>Quilometragem de Troca</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${relatorio.map(item => `
+                                            <tr>
+                                                <td>${item.veiculo}</td>
+                                                <td>${item.peca}</td>
+                                                <td>${item.quilometragem_atual}</td>
+                                                <td>${item.quilometragem_troca}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </body>
+                            </html>
+                        `);
+                    } catch (error) {
+                        console.error('Erro ao gerar relatório de peças:', error);
+                        alert('Erro ao gerar relatório de peças.');
+                    }
                 }
             }
         });
     </script>
 </body>
 </html>
-
